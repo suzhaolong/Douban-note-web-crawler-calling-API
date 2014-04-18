@@ -1,4 +1,5 @@
 import re
+import os
 import urllib.request
 def get_page(url):
     return urllib.request.urlopen(url).read()
@@ -18,12 +19,19 @@ def exract_title_and_content(url):
 	pattern = re.compile(pat)
 	useful = pattern.findall(str(content))
 	#return useful
-	title_and_link = {}
+	note_list = {}
 	for note in useful:
-		title_and_link[note[0]] = note[2]
-	return title_and_link
+		note_list[note[0]] = note[2]
+	return note_list
 
 
+def download(note_list,dir):
+	if not os.path.exists(dir):
+		os.mkdir(dir)
+		#print('nothing')
+	for note_title in note_list:
+		file_object = open(dir + '/' + note_title.replace('/','|') + '.html', 'w')
+        # '/' is not allowed to use in a filename under HFS+(OS X)
 
-
-
+		file_object.write(note_list[note_title])
+	file_object.close()
