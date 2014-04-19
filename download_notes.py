@@ -2,7 +2,7 @@ import re
 import os
 import urllib.request
 def get_page(url):
-    return urllib.request.urlopen(url).read()
+    return urllib.request.urlopen(url).read().decode('utf-8', 'ignore')
 
 
 def get_note_page(url,page_number):
@@ -14,14 +14,20 @@ def get_note_page(url,page_number):
 	return 'http://api.douban.com/people/'+ID[0]+'/notes?start-index=1&max-results='+str(page_number)
 
 def exract_title_and_content(url):
-	content = get_page(url)
-	pat = r'<title>(.*?)</title>(.*?)<content>(.*?)</content>'
-	pattern = re.compile(pat)
-	useful = pattern.findall(str(content))
-	#return useful
+	page_content = get_page(url)
+	pat_title = r'<title>(.*?)</title>'
+	pattern_title = re.compile(pat_title)
+	note_title = pattern_title.findall(str(page_content))
+
+	#(.*?)<content>(.*?)</content>
+
+	pat_content = r'<content>(.*?)</content>'
+	pattern_content = re.compile(pat_content)
+	note_content = pattern_content.findall(str(page_content))
 	note_list = {}
-	for note in useful:
-		note_list[note[0]] = note[2]
+
+	for i in range(0,len(note_title)-1):
+		note_list[note_title[i]] = note_content[i]
 	return note_list
 
 
@@ -34,4 +40,5 @@ def download(note_list,dir):
         # '/' is not allowed to use in a filename under HFS+(OS X)
 
 		file_object.write(note_list[note_title])
-	file_object.close()
+		file_object.close()
+		#print(note_title)
