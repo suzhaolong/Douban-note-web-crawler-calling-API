@@ -1,10 +1,12 @@
 #coding=utf-8
 import os
+import sys
 import urllib.request
 from download_notes import *
-#name = audreyang
 
-url = 'http://www.douban.com/people/audreyang/'
+#url = 'http://www.douban.com/people/audreyang/'
+
+url = input("Put the user's [Douban homepage] here:\n")
 
 i = 0
 
