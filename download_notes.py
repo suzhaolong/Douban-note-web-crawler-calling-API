@@ -14,23 +14,23 @@ def get_note_page(url,start_index):
 	return 'http://api.douban.com/people/'+ID[0]+'/notes?start-index='+str(start_index)+'&max-results=10'
 
 def exract_title_and_content(url):
-	page_content = get_page(url)
-	pat_title = r'<title>(.*?)</title>'
+	
+	page_content  = get_page(url)
+	pat_title     = r'<title>(.*?)</title>'
 	pattern_title = re.compile(pat_title)
-	_note_title = pattern_title.findall(str(page_content))
+	_note_title   = pattern_title.findall(str(page_content))
 
-	#(.*?)<content>(.*?)</content>
-
-	pat_content = r'<content>(.*?)</content>'
+	pat_content     = r'<content>(.*?)</content>'
 	pattern_content = re.compile(pat_content)
-	note_content = pattern_content.findall(str(page_content))
-	note_list = {}
+	note_content    = pattern_content.findall(str(page_content))
+
 
 	note_title = []
 	for i in range(1,len(_note_title)):
 		#discard the title of the this page
 		note_title.append(_note_title[i])
 
+	note_list  = {}
 	for i in range(0,len(note_title)):
 
 		content = note_content[i]
