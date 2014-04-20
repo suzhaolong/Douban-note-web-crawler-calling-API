@@ -31,7 +31,7 @@ def exract_title_and_content(url):
 		#discard the title of the this page
 		note_title.append(_note_title[i])
 
-	print(note_title)
+	#print(note_title)
 
 	for i in range(0,len(note_title)):
 
@@ -41,7 +41,7 @@ def exract_title_and_content(url):
 		content = content.replace("]]>","")
 		content = content.replace("<![CDATA[","")
 		note_list[note_title[i]] = content
-	return note_list
+	return _note_title[0],note_list
 
 
 def download(note_list,dir):
