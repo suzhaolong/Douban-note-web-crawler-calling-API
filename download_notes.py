@@ -5,13 +5,13 @@ def get_page(url):
     return urllib.request.urlopen(url).read().decode('utf-8', 'ignore')
 
 
-def get_note_page(url,page_number):
+def get_note_page(url,start_index):
 	#http://www.douban.com/people/audreyang/
 	pat     = r'http://www.douban.com/people/(.*?)/'
 	pattern = re.compile(pat)
 	ID      =  pattern.findall(str(url))
 	#link = 'http://api.douban.com/people/audreyang/notes?start-index=1&max-results=20'
-	return 'http://api.douban.com/people/'+ID[0]+'/notes?start-index=1&max-results='+str(page_number)
+	return 'http://api.douban.com/people/'+ID[0]+'/notes?start-index='+str(start_index)+'&max-results=10'
 
 def exract_title_and_content(url):
 	page_content = get_page(url)
@@ -25,7 +25,6 @@ def exract_title_and_content(url):
 	pattern_content = re.compile(pat_content)
 	note_content = pattern_content.findall(str(page_content))
 	note_list = {}
-
 
 	note_title = []
 	for i in range(1,len(_note_title)):
