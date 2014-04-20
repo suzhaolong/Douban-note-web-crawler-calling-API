@@ -1,8 +1,5 @@
-article
-dir
 test.py
 *.pyc
-main.py
 template.py
 _pycache_
 result_test
